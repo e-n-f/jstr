@@ -33,10 +33,8 @@ int main(int argc, char **argv) {
 					if ((c = getchar()) != EOF) {
 						putchar(c);
 					}
-				} else {
-					if (c == '"') {
-						break;
-					}
+				} else if (c == '"') {
+					break;
 				}
 			}
 		} else if (c == ':') {
