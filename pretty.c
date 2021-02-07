@@ -18,13 +18,12 @@ int main(int argc, char **argv) {
 	int wantnl = 0;
 
 	while ((c = getchar()) != EOF) {
-		if (c == '{' || c == '[' || c == '}' || c == ']') {
-			indent(level, &wantnl, c);
-			if (c == '{' || c == '[') {
-				level++;
-			} else {
-				level--;
-			}
+		if (c == '{' || c == '[') {
+			indent(level++, &wantnl, c);
+			wantnl = 1;
+		} else if (c == '}' || c == ']') {
+			wantnl = 1;
+			indent(--level, &wantnl, c);
 			wantnl = 1;
 		} else if (c == '"') {
 			indent(level, &wantnl, c);
@@ -46,10 +45,10 @@ int main(int argc, char **argv) {
 		} else if (c == ',') {
 			printf(", ");
 			wantnl = 1;
-		} else if (c == ' ' && c == '\t' && c == '\r' && c == '\n') {
+		} else if (c != ' ' && c != '\t' && c != '\r' && c != '\n') {
 			indent(level, &wantnl, c);
 		}
 	}
 
-	indent(level, &wantnl, '\n');
+	putchar('\n');
 }
