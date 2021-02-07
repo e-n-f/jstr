@@ -24,7 +24,6 @@ int main(int argc, char **argv) {
 		} else if (c == '}' || c == ']') {
 			wantnl = 1;
 			indent(--level, &wantnl, c);
-			wantnl = 1;
 		} else if (c == '"') {
 			indent(level, &wantnl, c);
 			while ((c = getchar()) != EOF) {
