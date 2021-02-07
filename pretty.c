@@ -1,9 +1,9 @@
 #include <stdio.h>
 
-void indent(size_t level, int *wantnl, int c) {
+void indent(ssize_t level, int *wantnl, int c) {
 	if (*wantnl) {
 		putchar('\n');
-		for (size_t i = 0; i < level; i++) {
+		for (ssize_t i = 0; i < level; i++) {
 			putchar('\t');
 		}
 		*wantnl = 0;
@@ -14,7 +14,7 @@ void indent(size_t level, int *wantnl, int c) {
 
 int main(int argc, char **argv) {
 	int c;
-	size_t level = 0;
+	ssize_t level = 0;
 	int wantnl = 0;
 
 	while ((c = getchar()) != EOF) {
