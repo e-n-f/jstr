@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-void indent(ssize_t level, int *want, int *inhibit, int c) {
-	if (!*inhibit) {
-		if (*want) {
+void indent(ssize_t level, int *split, int *join, int c) {
+	if (!*join) {
+		if (*split) {
 			putchar('\n');
 			for (ssize_t i = 0; i < level; i++) {
 				putchar('\t');
@@ -10,25 +10,25 @@ void indent(ssize_t level, int *want, int *inhibit, int c) {
 		}
 	}
 
-	*want = *inhibit = 0;
+	*split = *join = 0;
 	putchar(c);
 }
 
 int main(int argc, char **argv) {
 	int c;
 	ssize_t level = 0;
-	int want = 0, inhibit = 1;
+	int split = 0, join = 1;
 
 	while ((c = getchar()) != EOF) {
 		if (c == '{' || c == '[') {
-			indent(level++, &want, &inhibit, c);
-			want = 1;
+			indent(level++, &split, &join, c);
+			split = 1;
 		} else if (c == '}' || c == ']') {
-			want = 1;
-			indent(--level, &want, &inhibit, c);
-			want = 1;
+			split = 1;
+			indent(--level, &split, &join, c);
+			split = 1;
 		} else if (c == '"') {
-			indent(level, &want, &inhibit, c);
+			indent(level, &split, &join, c);
 			while ((c = getchar()) != EOF) {
 				putchar(c);
 				if (c == '\\') {
@@ -41,14 +41,14 @@ int main(int argc, char **argv) {
 			}
 		} else if (c == ':') {
 			printf(": ");
-			inhibit = 1;
+			join = 1;
 		} else if (c == ',') {
 			printf(", ");
-			want = 1;
+			split = 1;
 		} else if (c == ' ' || c == '\t' || c == '\r' || c == '\n') {
-			want = 1;
+			split = 1;
 		} else {
-			indent(level, &want, &inhibit, c);
+			indent(level, &split, &join, c);
 		}
 	}
 
