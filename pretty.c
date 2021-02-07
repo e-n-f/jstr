@@ -28,13 +28,12 @@ int main(int argc, char **argv) {
 		} else if (c == '"') {
 			indent(level, &wantnl, c);
 			while ((c = getchar()) != EOF) {
+				putchar(c);
 				if (c == '\\') {
-					putchar(c);
 					if ((c = getchar()) != EOF) {
 						putchar(c);
 					}
 				} else {
-					putchar(c);
 					if (c == '"') {
 						break;
 					}
